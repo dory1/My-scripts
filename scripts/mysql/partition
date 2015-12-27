@@ -1,0 +1,31 @@
+#!/bin/bash
+January=31 
+February=28 # 29  in Leap Years
+March=31 
+April=30 
+May=31 
+June=30 
+July=31 
+August=31 
+September=30 
+October=31 
+November=30 
+December=31  
+ARRAY=(0 31 28 31 30 31 30 31 31 30 31 30 31)
+echo ${ARRAY[09]}
+par=$2
+month=$1
+
+echo "alter table ips add partition ("
+for i in `seq 01 ${ARRAY[$month]}`
+do
+par=$(($par+1))
+if [ $i -lt 10 ]
+then
+i=0$i
+echo "PARTITION p2015$month$i VALUES LESS THAN ($par) ENGINE = InnoDB,"
+else
+echo "PARTITION p2015$month$i VALUES LESS THAN ($par) ENGINE = InnoDB,"
+fi
+done
+echo ');'

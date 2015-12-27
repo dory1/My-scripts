@@ -1,0 +1,85 @@
+#!/bin/bash
+/home/system/scripts/daily_report/html_test/daily_report > /home/system/scripts/daily_report/html_test/daily_report.log
+x=`cat /home/system/scripts/daily_report/html_test/daily_report.log`
+(
+echo "From: root@bdnsadmin.bezeqint.net "
+echo "To: Systemunixint@BEZEQINT.CO.IL"
+echo "MIME-Version: 1.0"
+echo "Content-Type: multipart/alternative; " 
+echo ' boundary="some.unique.value.ABC123/server.xyz.com"' 
+echo "Subject: BDNS current report" 
+echo "" 
+echo "This is a MIME-encapsulated message" 
+echo "" 
+echo "--some.unique.value.ABC123/server.xyz.com" 
+echo "Content-Type: text/html" 
+echo "" 
+echo "
+<!DOCTYPE html>
+<html> 
+
+<head>
+<style>
+table{
+    width:85%;
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1px;
+    font-style: normal;
+    border-collapse:separate;
+}
+th{
+    padding:7px;
+    color:#fff;
+    border:1px solid #93CE37;
+    border-bottom:3px solid #9ED929;
+    background-color:#9DD929;
+    background:-webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.02, rgb(123,192,67)),
+        color-stop(0.51, rgb(139,198,66)),
+        color-stop(0.87, rgb(158,217,41))
+        );
+    background: -moz-linear-gradient(
+        center bottom,
+        rgb(123,192,67) 2%,
+        rgb(139,198,66) 51%,
+        rgb(158,217,41) 87%
+        );
+    -webkit-border-top-left-radius:5px;
+    -webkit-border-top-right-radius:5px;
+    -moz-border-radius:5px 5px 0px 0px;
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+}
+th:empty{
+    background:transparent;
+    border:none;
+}
+ td{
+    padding:1px;
+    text-align:center;
+    background-color:#DEF3CA;
+    border: 1px solid #E7EFE0;
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    border-radius:2px;
+    color:#2d2c2c;
+    height:2px;
+}
+</style>
+</head>
+<body>
+<br>
+<table id="t01">
+  <tr>
+    <th>server name</th>
+    <th>Queries per minute</th>		
+    <th>Servfail per minute</th>
+  </tr>"
+echo -e "$x"
+) | /usr/sbin/sendmail -t
+

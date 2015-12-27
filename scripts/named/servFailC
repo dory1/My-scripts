@@ -1,0 +1,8 @@
+#!/bin/bash
+start_time=`date`
+curr_min=`date +"%M"`
+priv_min=`echo $curr_min - 1 | bc`
+search_pattren=`date +"%d-%b-%Y %H:$priv_min:"`
+x=`tail -500000 /var/named/chroot/var/named/data/named.log | grep -i Servfail | grep -n "$search_pattren"  | wc -l`
+echo "$x"
+

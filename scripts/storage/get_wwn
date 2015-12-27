@@ -1,0 +1,2 @@
+#!/bin/bash
+cat /sys/class/fc_host/host*/port_name | sed 's/0x//g' | sed 's/../&:/g;s/:$//'

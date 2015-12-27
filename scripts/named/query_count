@@ -1,0 +1,6 @@
+#!/bin/bash
+curr_min=`date +"%M"`
+priv_min=`echo $curr_min - 1 | bc`
+search_pattren=`date +"%d-%b-%Y %H:$priv_min:"`
+tac /var/named/chroot/var/named/data/query.log | grep "$search_pattren" | wc -l
+
